@@ -1,0 +1,33 @@
+import { MoleculeListOutput } from '@/utils/trpc';
+import { ValuesType } from 'utility-types';
+
+interface MoleculeListItemProps extends ValuesType<MoleculeListOutput> {
+  onClick: () => unknown;
+}
+
+export default function MoleculeListItem({
+  name,
+  numAtoms,
+  numBonds,
+  uniqueElements,
+  preview,
+  onClick,
+}: MoleculeListItemProps) {
+  const atomLabel = numAtoms === 1 ? 'atom' : 'atoms';
+  const bondLabel = numBonds === 1 ? 'bond' : 'bonds';
+  return (
+    <label
+      htmlFor="molecule-view-modal"
+      className="flex w-full cursor-pointer select-none flex-row items-center space-x-3 rounded-lg border border-base-300 bg-base-100 px-5 py-3 drop-shadow-sm transition hover:bg-base-200 sm:w-80"
+      onClick={() => onClick()}
+    >
+      <div className="w-16" dangerouslySetInnerHTML={{ __html: preview }} />
+      <div>
+        <p className="font-medium">{name}</p>
+        <p className="text-sm">
+          {numAtoms} {atomLabel} • {numBonds} {bondLabel}
+        </p>
+      </div>
+    </label>
+  );
+}

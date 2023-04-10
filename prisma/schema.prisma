@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Element {
+  code   String @id
+  name   String
+  color  String
+  radius Int
+  atoms  Atom[]
+}
+
+model Atom {
+  id          String   @id @default(cuid())
+  moleculeId  String
+  molecule    Molecule @relation(fields: [moleculeId], references: [id], onDelete: Cascade)
+  elementCode String
+  element     Element  @relation(fields: [elementCode], references: [code], onDelete: Restrict)
+  x           Decimal
+  y           Decimal
+  z           Decimal
+  bondsA1     Bond[]   @relation("atom1")
+  bondsA2     Bond[]   @relation("atom2")
+
+  @@index(moleculeId)
+  @@index(elementCode)
+}
+
+model Bond {
+  id         String   @id @default(cuid())
+  moleculeId String
+  molecule   Molecule @relation(fields: [moleculeId], references: [id], onDelete: Cascade)
+  a1         String
+  atom1      Atom     @relation("atom1", fields: [a1], references: [id])
+  a2         String
+  atom2      Atom     @relation("atom2", fields: [a2], references: [id])
+  epairs     Int
+
+  @@index(moleculeId)
+  @@index(a1)
+  @@index(a2)
+}
+
+model Molecule {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  atoms     Atom[]
+  bonds     Bond[]
+}

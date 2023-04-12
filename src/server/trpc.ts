@@ -1,6 +1,6 @@
 import { initTRPC } from '@trpc/server';
 import { ZodError } from 'zod';
-import { Context } from './context';
+import type { Context } from './context';
 import { FieldError } from './errors';
 
 const t = initTRPC.context<Context>().create({

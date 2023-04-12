@@ -1,5 +1,4 @@
 import type { Molecule } from '@/ts/types';
-import { createId } from '@paralleldrive/cuid2';
 
 export const SDF_FILE1 = `31260
   -OEChem-05121014433D
@@ -207,6 +206,10 @@ function parseSDFFloat(str: string, line: number) {
     throw new SDFParseError(`invalid number "${str}"`, line);
   }
   return val;
+}
+
+function createId() {
+  return crypto.randomUUID();
 }
 
 export function parseSDF(sdf: string, moleculeName?: string) {

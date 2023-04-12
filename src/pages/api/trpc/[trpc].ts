@@ -1,10 +1,15 @@
 import { createContext } from '@/server/context';
-import * as trpcNext from '@trpc/server/adapters/next';
+import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
+import { NextRequest } from 'next/server';
 import { appRouter } from '../../../server/routers/_app';
 
-// export API handler
-// @see https://trpc.io/docs/api-handler
-export default trpcNext.createNextApiHandler({
-  router: appRouter,
-  createContext,
-});
+export const config = { runtime: 'edge' };
+
+export default function handler(req: NextRequest) {
+  return fetchRequestHandler({
+    endpoint: '/api/trpc',
+    req,
+    router: appRouter,
+    createContext,
+  });
+}

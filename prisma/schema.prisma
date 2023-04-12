@@ -20,7 +20,7 @@ model Element {
 }
 
 model Atom {
-  id          String   @id @default(cuid())
+  id          String   @id @default(uuid())
   moleculeId  String
   molecule    Molecule @relation(fields: [moleculeId], references: [id], onDelete: Cascade)
   elementCode String
@@ -36,7 +36,7 @@ model Atom {
 }
 
 model Bond {
-  id         String   @id @default(cuid())
+  id         String   @id @default(uuid())
   moleculeId String
   molecule   Molecule @relation(fields: [moleculeId], references: [id], onDelete: Cascade)
   a1         String
@@ -51,7 +51,7 @@ model Bond {
 }
 
 model Molecule {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   name      String   @unique
   createdAt DateTime @default(now())
   atoms     Atom[]

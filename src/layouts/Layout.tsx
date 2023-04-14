@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { NextSeo, NextSeoProps } from 'next-seo';
 import Head from 'next/head';
 import Link from 'next/link';
 import { ReactNode } from 'react';
@@ -55,14 +56,14 @@ function Header() {
 }
 
 interface LayoutProps {
-  title: string;
+  seo: NextSeoProps;
   children: ReactNode;
   kind?: 'centered' | 'full';
   header?: boolean;
 }
 
 export default function Layout({
-  title,
+  seo,
   children,
   kind = 'centered',
   header = true,
@@ -70,10 +71,10 @@ export default function Layout({
   return (
     <>
       <Head>
-        <title>{title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <NextSeo {...seo} />
       <div className="flex h-screen flex-col">
         {header && <Header />}
         <main

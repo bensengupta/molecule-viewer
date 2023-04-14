@@ -2,7 +2,12 @@ import Layout from '@/layouts/Layout';
 
 export default function Home() {
   return (
-    <Layout title="Molecule Viewer" kind="full">
+    <Layout
+      seo={{
+        title: "Molecule Viewer",
+        description: "View and manipulate 3D models of molecules and compounds, allowing you to gain a better understanding of their structure, properties, and interactions."
+      }}
+      kind="full">
       <div className="hero min-h-full bg-base-200">
         <div className="hero-content text-center">
           <div className="max-w-md">

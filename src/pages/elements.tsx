@@ -25,7 +25,7 @@ export default function ElementsPage() {
   const search = useFuseSearch(elements, [{ name: 'name', weight: 2 }, 'code']);
 
   return (
-    <Layout title="Elements">
+    <Layout seo={{ title: 'Elements', description: "List of elements" }}>
       <div className="space-y-3 p-4">
         <div className="flex flex-row items-center space-x-4">
           <h1 className="text-4xl font-semibold">Elements</h1>

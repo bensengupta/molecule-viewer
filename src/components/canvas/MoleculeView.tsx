@@ -21,7 +21,6 @@ function MoleculeGroup({ molecule }: MoleculeViewProps) {
     spin: false,
   });
 
-
   useFrame((state, delta) => {
     if (spin) {
       ref.current!.rotation.y += ROTATION_MULTIPLIER * delta;

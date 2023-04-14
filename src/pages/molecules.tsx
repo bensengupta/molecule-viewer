@@ -21,7 +21,7 @@ export default function MoleculePage() {
   ]);
 
   return (
-    <Layout title="Molecules">
+    <Layout seo={{ title: 'Molecules', description: 'List of molecules' }}>
       <div className="space-y-3 p-4">
         <div className="flex flex-row items-center space-x-4">
           <h1 className="text-4xl font-semibold">Molecules</h1>

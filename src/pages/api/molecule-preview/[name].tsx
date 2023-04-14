@@ -40,7 +40,7 @@ function notFoundResponse(width: number) {
 export default async function handler(req: NextRequest) {
 	const { searchParams } = new URL(req.url)
 	const name = searchParams.get('name')
-	const width = clamp(parseInt(searchParams.get('width') ?? '64', 10), 64, 1000);
+	const width = clamp(parseInt(searchParams.get('width') ?? '800', 10), 64, 1000);
 
 	if (!name) return notFoundResponse(width);
 

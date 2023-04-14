@@ -1,7 +1,12 @@
 import { PopulatedMolecule } from '@/ts/types';
+import { getBaseUrl } from '@/utils/trpc';
 
 const scaleCoord = (x: number) => 100 * x + 500;
 const scaleSize = (x: number) => 1.5 * x;
+
+export function getMoleculePreviewUrl(name: string) {
+  return `${getBaseUrl()}/api/molecule-preview/${encodeURIComponent(name)}`;
+}
 
 export function generateSVGPreview(molecule: PopulatedMolecule) {
   const objects = [

@@ -3,7 +3,8 @@ import { createTRPCNext } from '@trpc/next';
 import { inferRouterOutputs } from '@trpc/server';
 import type { AppRouter } from '../server/routers/_app';
 
-function getBaseUrl() {
+// Also change in next.config.js
+export function getBaseUrl() {
   if (typeof window !== 'undefined')
     // browser should use relative path
     return '';

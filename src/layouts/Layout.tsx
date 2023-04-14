@@ -78,7 +78,7 @@ export default function Layout({
         {header && <Header />}
         <main
           className={clsx(
-            kind === 'centered' && 'mx-auto w-full max-w-5xl',
+            kind === 'centered' && 'mx-auto w-full max-w-5xl mt-4',
             'flex-shrink flex-grow'
           )}
         >

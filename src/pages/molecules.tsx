@@ -34,7 +34,7 @@ export default function MoleculePage() {
         <FuseSearchInput search={search} className="w-full sm:max-w-md" />
 
         <div className="grid gap-3 sm:grid-cols-auto-fill">
-          {search.results().map(({ item: mol, refIndex: idx }) => (
+          {search.results().map(({ item: mol }) => (
             <MoleculeListItem
               key={mol.name}
               onClick={() => setMolName(mol.name)}

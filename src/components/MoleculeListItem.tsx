@@ -1,4 +1,5 @@
 import { MoleculeListOutput } from '@/utils/trpc';
+import Image from 'next/image';
 import { ValuesType } from 'utility-types';
 
 interface MoleculeListItemProps extends ValuesType<MoleculeListOutput> {
@@ -9,19 +10,19 @@ export default function MoleculeListItem({
   name,
   numAtoms,
   numBonds,
-  uniqueElements,
-  preview,
+  previewUrl,
   onClick,
 }: MoleculeListItemProps) {
   const atomLabel = numAtoms === 1 ? 'atom' : 'atoms';
   const bondLabel = numBonds === 1 ? 'bond' : 'bonds';
+
   return (
     <label
       htmlFor="molecule-view-modal"
       className="flex w-full cursor-pointer select-none flex-row items-center space-x-3 rounded-lg border border-base-300 bg-base-100 px-5 py-3 drop-shadow-sm transition hover:bg-base-200 sm:w-80"
       onClick={() => onClick()}
     >
-      <div className="w-16" dangerouslySetInnerHTML={{ __html: preview }} />
+      <Image src={previewUrl} alt="Molecule preview" width={64} height={64} />
       <div>
         <p className="font-medium">{name}</p>
         <p className="text-sm">

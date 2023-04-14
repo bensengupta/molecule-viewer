@@ -33,6 +33,7 @@ export interface Molecule {
 
 export interface PopulatedMolecule {
   name: string;
+  previewUrl: string;
   atoms: Record<string, AtomWithElement>;
   bonds: Record<string, Bond>;
 }

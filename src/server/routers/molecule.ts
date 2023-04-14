@@ -14,7 +14,6 @@ import {
   populateMolecule,
   prepopulateMoleculeArgs,
 } from '../utils/db';
-import { generateSVGPreview } from '../utils/molecule';
 import { SDFParseError, parseSDF } from '../utils/sdf';
 
 export const moleculeRouter = router({
@@ -22,16 +21,16 @@ export const moleculeRouter = router({
     const res = await ctx.prisma.molecule.findMany(prepopulateMoleculeArgs());
     const molecules = res.map(populateMolecule);
 
-    return molecules.map((mol) => ({
-      name: mol.name,
-      numAtoms: Object.keys(mol.atoms).length,
-      numBonds: Object.keys(mol.bonds).length,
+    return molecules.map(({ name, previewUrl, atoms, bonds }) => ({
+      name,
+      previewUrl,
+      numAtoms: Object.keys(atoms).length,
+      numBonds: Object.keys(bonds).length,
       uniqueElements: unique(
-        Object.values(mol.atoms)
+        Object.values(atoms)
           .map((at) => at.element?.name)
           .filter(Boolean)
       ),
-      preview: generateSVGPreview(mol),
     }));
   }),
   getByName: procedure.input(z.string()).query(async ({ input, ctx }) => {

@@ -35,3 +35,7 @@ export function commaList(strs: string[]) {
   if (strs.length === 2) return strs[0] + ' and ' + strs[1];
   return strs.slice(0, -1).join(', ') + ', and ' + strs.at(-1);
 }
+
+export function clamp(value: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, value));
+}

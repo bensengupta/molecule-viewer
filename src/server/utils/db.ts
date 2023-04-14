@@ -1,6 +1,7 @@
 import { Molecule, PopulatedMolecule } from '@/ts/types';
 import { UNKNOWN_ELEMENT } from '@/utils/constants';
 import { Prisma, PrismaClient } from '@prisma/client';
+import { getMoleculePreviewUrl } from './molecule';
 
 export function prepopulateMoleculeArgs() {
   return {
@@ -16,6 +17,7 @@ export function populateMolecule(
 ): PopulatedMolecule {
   return {
     name: mol.name,
+    previewUrl: getMoleculePreviewUrl(mol.name),
     atoms: Object.fromEntries(
       mol.atoms.map((at) => [
         at.id,

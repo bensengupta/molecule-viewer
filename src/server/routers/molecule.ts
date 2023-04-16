@@ -1,5 +1,5 @@
 import { MoleculeRenameSchema, MoleculeSchema } from '@/schemas/molecule';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client/edge';
 import { z } from 'zod';
 import type { Molecule } from '../../ts/types';
 import { unique } from '../../utils/helpers';

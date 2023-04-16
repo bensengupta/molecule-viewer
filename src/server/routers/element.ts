@@ -1,5 +1,5 @@
 import { ElementSchema } from '@/schemas/element';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client/edge';
 import { z } from 'zod';
 import {
   CodeAlreadyExistsError,
@@ -47,7 +47,7 @@ export const elementRouter = router({
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         if (e.code === 'P2025') {
           throw new CodeNotFoundError(input);
-        } else if (e.code === 'P2003') {
+        } else if (e.code === 'P2003' || e.code === 'P2014') {
           const res = await ctx.prisma.molecule.findMany({
             select: { name: true },
             take: 3,

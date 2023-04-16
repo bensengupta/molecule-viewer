@@ -9,6 +9,7 @@ datasource db {
   provider     = "mysql"
   url          = env("DATABASE_URL")
   relationMode = "prisma"
+  directUrl    = env("MIGRATE_DATABASE_URL")
 }
 
 model Element {
@@ -40,9 +41,9 @@ model Bond {
   moleculeId String
   molecule   Molecule @relation(fields: [moleculeId], references: [id], onDelete: Cascade)
   a1         String
-  atom1      Atom     @relation("atom1", fields: [a1], references: [id])
+  atom1      Atom     @relation("atom1", fields: [a1], references: [id], onDelete: Cascade)
   a2         String
-  atom2      Atom     @relation("atom2", fields: [a2], references: [id])
+  atom2      Atom     @relation("atom2", fields: [a2], references: [id], onDelete: Cascade)
   epairs     Int
 
   @@index(moleculeId)

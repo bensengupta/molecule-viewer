@@ -1,6 +1,7 @@
 import { Molecule, PopulatedMolecule } from '@/ts/types';
 import { UNKNOWN_ELEMENT } from '@/utils/constants';
-import { Prisma, PrismaClient } from '@prisma/client';
+import { unique } from '@/utils/helpers';
+import { Prisma, PrismaClient } from '@prisma/client/edge';
 import { getMoleculePreviewUrl } from './molecule';
 
 export function prepopulateMoleculeArgs() {
@@ -34,48 +35,42 @@ export function populateMolecule(
 }
 
 export async function createMolecule(prisma: PrismaClient, mol: Molecule) {
+  const uniqueElements = unique(
+    Object.values(mol.atoms).map((at) => at.element)
+  );
+
+  for (const element of uniqueElements) {
+    await prisma.element.upsert({
+      where: { code: element },
+      update: {},
+      create: {
+        ...UNKNOWN_ELEMENT,
+        code: element,
+      },
+    });
+  }
+
   const { id: moleculeId } = await prisma.molecule.create({
-    data: { name: mol.name },
+    data: {
+      name: mol.name,
+      atoms: {
+        createMany: {
+          data: Object.entries(mol.atoms).map(([id, { element, ...at }]) => ({
+            ...at,
+            id,
+            elementCode: element,
+          })),
+        },
+      },
+      bonds: {
+        createMany: {
+          data: Object.entries(mol.bonds).map(([id, bo]) => ({
+            ...bo,
+            id,
+          }))
+        }
+      }
+    },
     select: { id: true },
   });
-
-  for (const id in mol.atoms) {
-    const { element, ...at } = mol.atoms[id];
-
-    await prisma.atom.create({
-      data: {
-        ...at,
-        id,
-        molecule: {
-          connect: { id: moleculeId },
-        },
-        element: {
-          connectOrCreate: {
-            where: { code: element },
-            create: { ...UNKNOWN_ELEMENT, code: element },
-          },
-        },
-      },
-    });
-  }
-
-  for (const id in mol.bonds) {
-    const { a1, a2, ...bo } = mol.bonds[id];
-
-    await prisma.bond.create({
-      data: {
-        ...bo,
-        id,
-        molecule: {
-          connect: { id: moleculeId },
-        },
-        atom1: {
-          connect: { id: a1 },
-        },
-        atom2: {
-          connect: { id: a2 },
-        },
-      },
-    });
-  }
 }

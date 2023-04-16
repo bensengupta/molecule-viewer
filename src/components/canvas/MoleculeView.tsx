@@ -11,7 +11,7 @@ interface MoleculeViewProps {
   molecule: PopulatedMolecule;
 }
 
-const ROTATION_MULTIPLIER = -.15;
+const ROTATION_MULTIPLIER = -0.4;
 
 function MoleculeGroup({ molecule }: MoleculeViewProps) {
   const ref = useRef<Group>(null);
@@ -43,7 +43,7 @@ function MoleculeGroup({ molecule }: MoleculeViewProps) {
         />
       ))}
     </group>
-  )
+  );
 }
 
 export default function MoleculeView(props: MoleculeViewProps) {

@@ -22,9 +22,15 @@ export default function MoleculeListItem({
       className="flex w-full cursor-pointer select-none flex-row items-center space-x-3 rounded-lg border border-base-300 bg-base-100 px-5 py-3 drop-shadow-sm transition hover:bg-base-200 sm:w-80"
       onClick={() => onClick()}
     >
-      <Image src={previewUrl} alt="Molecule preview" width={64} height={64} />
-      <div>
-        <p className="font-medium">{name}</p>
+      <Image
+        src={previewUrl}
+        alt="Molecule preview"
+        width={64}
+        height={64}
+        quality={100}
+      />
+      <div className="overflow-hidden">
+        <p className="overflow-hidden text-ellipsis font-medium">{name}</p>
         <p className="text-sm">
           {numAtoms} {atomLabel} • {numBonds} {bondLabel}
         </p>

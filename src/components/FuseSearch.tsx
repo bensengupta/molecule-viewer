@@ -1,19 +1,25 @@
 import clsx from 'clsx';
-import Fuse from 'fuse.js';
-import { HTMLProps, useState } from 'react';
+import type Fuse from 'fuse.js';
+import { HTMLProps, useRef, useState } from 'react';
 
 export function useFuseSearch<T>(items: T[], keys: Fuse.FuseOptionKey<T>[]) {
   const [pattern, setPattern] = useState('');
-  const fuse = new Fuse<T>(items, { keys });
+  let fuse = useRef<Fuse<T> | null>(null);
 
   return {
     pattern,
-    setPattern,
-    results: (): Fuse.FuseResult<T>[] => {
-      if (pattern === '') {
-        return items.map((item, refIndex) => ({ item, refIndex }));
+    setPattern: async (newPattern: string) => {
+      if (!fuse.current) {
+        console.log('fuse init');
+        const Fuse = (await import('fuse.js')).default;
+        fuse.current = new Fuse(items, { keys });
       }
-      return fuse.search(pattern).map((res) => res);
+      setPattern(newPattern);
+    },
+    results: (): Fuse.FuseResult<T>[] => {
+      return pattern === '' || !fuse.current
+        ? items.map((item, refIndex) => ({ item, refIndex }))
+        : fuse.current.search(pattern);
     },
   };
 }

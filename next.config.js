@@ -12,7 +12,7 @@ function getDomain() {
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    minimumCacheTTL: 30,
+    minimumCacheTTL: 60,
     domains: [getDomain()],
   },
 };

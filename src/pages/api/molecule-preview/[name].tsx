@@ -58,7 +58,7 @@ export default async function handler(req: NextRequest) {
     width,
     height: width,
     headers: {
-      'cache-control': 'max-age=30',
+      'cache-control': 'max-age=60',
     },
   });
 }

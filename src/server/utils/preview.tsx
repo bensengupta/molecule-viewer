@@ -139,7 +139,7 @@ export function getMoleculeSVGPreview(
   const objects = [
     ...Object.entries(molecule.atoms).map(([id, atom]) => ({
       elem: getAtom(id, atom),
-      z: atom.z,
+      z: atom.z + 0.00001,
     })),
     ...Object.entries(molecule.bonds).map(([id, bond]) => {
       const atom1 = molecule.atoms[bond.a1];

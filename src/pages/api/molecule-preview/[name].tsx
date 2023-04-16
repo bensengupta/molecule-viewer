@@ -58,6 +58,7 @@ export default async function handler(req: NextRequest) {
     width,
     height: width,
     headers: {
+      // Also change images.minimumCacheTTL in next.config.js
       'cache-control': 'max-age=60',
     },
   });

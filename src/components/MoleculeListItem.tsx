@@ -30,7 +30,9 @@ export default function MoleculeListItem({
         quality={100}
       />
       <div className="overflow-hidden">
-        <p className="overflow-hidden text-ellipsis font-medium">{name}</p>
+        <p className="overflow-hidden text-ellipsis whitespace-nowrap font-medium">
+          {name}
+        </p>
         <p className="text-sm">
           {numAtoms} {atomLabel} • {numBonds} {bondLabel}
         </p>

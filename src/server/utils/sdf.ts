@@ -27,11 +27,7 @@ function parseSDFFloat(str: string, line: number) {
   return val;
 }
 
-function createId() {
-  return crypto.randomUUID();
-}
-
-export function parseSDF(sdf: string, moleculeName?: string) {
+export function parseSDF(sdf: string, createId: () => string, moleculeName?: string) {
   const lines = sdf.split('\n');
 
   let lineCounter = 0;
@@ -42,17 +38,12 @@ export function parseSDF(sdf: string, moleculeName?: string) {
   }
 
   const name = moleculeName || lines[0].trim() || 'Undefined molecule';
-  const countsLine = lineParts(lines[3]);
+  const countsLine = lines[3];
 
   lineCounter += 4;
 
-  // Not enough numbers in counts line
-  if (countsLine.length < 2) {
-    throw new SDFParseError('invalid counts line', lineCounter);
-  }
-
-  const numAtoms = parseSDFInt(countsLine[0], lineCounter);
-  const numBonds = parseSDFInt(countsLine[1], lineCounter);
+  const numAtoms = parseSDFInt(countsLine.substring(0, 3).trim(), lineCounter);
+  const numBonds = parseSDFInt(countsLine.substring(3, 6).trim(), lineCounter);
 
   // Not enough lines for all atoms and bonds
   if (lines.length < 4 + numAtoms + numBonds) {
@@ -94,15 +85,12 @@ export function parseSDF(sdf: string, moleculeName?: string) {
       throw new SDFParseError('not enough lines', lineCounter);
     }
 
-    const bondLine = lineParts(lines[lineCounter]);
+    const bondLine = lines[lineCounter];
 
-    // Not enough data on line
-    if (bondLine.length < 3) {
-      throw new SDFParseError('invalid bond line', lineCounter);
-    }
-
-    const atom1Idx = parseSDFInt(bondLine[0], lineCounter) - 1;
-    const atom2Idx = parseSDFInt(bondLine[1], lineCounter) - 1;
+    const atom1Idx =
+      parseSDFInt(bondLine.substring(0, 3).trim(), lineCounter) - 1;
+    const atom2Idx =
+      parseSDFInt(bondLine.substring(3, 6).trim(), lineCounter) - 1;
 
     if (atom1Idx >= atomIds.length || atom2Idx >= atomIds.length) {
       throw new SDFParseError('bond references invalid atom', lineCounter);
@@ -111,7 +99,7 @@ export function parseSDF(sdf: string, moleculeName?: string) {
     mol.bonds[createId()] = {
       a1: atomIds[atom1Idx],
       a2: atomIds[atom2Idx],
-      epairs: parseSDFInt(bondLine[2], lineCounter),
+      epairs: parseSDFInt(bondLine.substring(6, 9).trim(), lineCounter),
     };
     lineCounter++;
   }

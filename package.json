@@ -11,7 +11,7 @@
     "gen": "yarn prisma generate --data-proxy"
   },
   "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "seed": "ts-node -r tsconfig-paths/register --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.0.0",
@@ -39,6 +39,7 @@
     "eslint": "8.37.0",
     "eslint-config-next": "13.2.4",
     "fuse.js": "^6.6.2",
+    "glob": "^10.1.0",
     "leva": "^0.9.34",
     "next": "13.2.4",
     "next-seo": "^6.0.0",

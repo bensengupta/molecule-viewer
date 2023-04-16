@@ -20,7 +20,9 @@ export default function ElementListItem({
     >
       <p className="w-16 text-3xl font-bold text-accent-content">{code}</p>
       <div className="overflow-hidden">
-        <p className="overflow-hidden text-ellipsis font-medium">{name}</p>
+        <p className="overflow-hidden text-ellipsis whitespace-nowrap font-medium">
+          {name}
+        </p>
         <div className="flex flex-row space-x-1">
           <p className="text-sm">Radius: {radius} • Color:</p>
           <Circle color={color} className="w-3" />

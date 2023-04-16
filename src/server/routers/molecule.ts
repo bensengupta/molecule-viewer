@@ -47,7 +47,7 @@ export const moleculeRouter = router({
     let molecule: Molecule;
 
     try {
-      molecule = parseSDF(input.fileContents, input.name);
+      molecule = parseSDF(input.fileContents, () => crypto.randomUUID(), input.name);
     } catch (err) {
       if (err instanceof SDFParseError) {
         throw new MoleculeInvalidSDFError(err);

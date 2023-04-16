@@ -1,7 +1,7 @@
 import { useFrame } from '@react-three/fiber';
 import { useControls } from 'leva';
 import { useRef } from 'react';
-import { Group } from 'three';
+import { Mesh } from 'three';
 import type { PopulatedMolecule } from '../../ts/types';
 import AtomCanvas from './AtomCanvas';
 import AtomMesh from './AtomMesh';
@@ -11,10 +11,10 @@ interface MoleculeViewProps {
   molecule: PopulatedMolecule;
 }
 
-const ROTATION_MULTIPLIER = -0.4;
+const ROTATION_MULTIPLIER = -0.5;
 
 function MoleculeGroup({ molecule }: MoleculeViewProps) {
-  const ref = useRef<Group>(null);
+  const ref = useRef<Mesh>(null);
 
   const { spin } = useControls({
     name: { value: molecule.name, editable: false },
@@ -28,7 +28,7 @@ function MoleculeGroup({ molecule }: MoleculeViewProps) {
   });
 
   return (
-    <group ref={ref}>
+    <mesh ref={ref} position={[0, 0, 0]}>
       {Object.entries(molecule.atoms).map(([atomId, atom]) => (
         <AtomMesh
           key={'molecule_' + molecule.name + '_atom_' + atomId}
@@ -42,7 +42,7 @@ function MoleculeGroup({ molecule }: MoleculeViewProps) {
           atom2={molecule.atoms[bond.a2]}
         />
       ))}
-    </group>
+    </mesh>
   );
 }
 

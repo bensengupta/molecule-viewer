@@ -12,6 +12,13 @@ datasource db {
   directUrl    = env("MIGRATE_DATABASE_URL")
 }
 
+// Planetscale hobby tier database :(
+model DummyTable {
+  id         String   @id @default(uuid())
+  dummyValue Int
+  createdAt  DateTime @default(now())
+}
+
 model Element {
   code   String @id
   name   String

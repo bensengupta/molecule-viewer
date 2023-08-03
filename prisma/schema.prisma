@@ -6,17 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider     = "mysql"
-  url          = env("DATABASE_URL")
-  relationMode = "prisma"
-  directUrl    = env("MIGRATE_DATABASE_URL")
-}
-
-// Planetscale hobby tier database :(
-model DummyTable {
-  id         String   @id @default(uuid())
-  dummyValue Int
-  createdAt  DateTime @default(now())
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("MIGRATE_DATABASE_URL")
 }
 
 model Element {

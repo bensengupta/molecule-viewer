@@ -1,18 +1,18 @@
 import { MoleculeRenameSchema, MoleculeSchema } from '@/schemas/molecule';
-import { Prisma } from '@prisma/client/edge';
+import { Prisma } from '@prisma/client';
 import { z } from 'zod';
 import type { Molecule } from '../../ts/types';
 import { unique } from '../../utils/helpers';
 import {
-  MoleculeAlreadyExistsError,
-  MoleculeInvalidSDFError,
-  MoleculeNotFoundError,
+    MoleculeAlreadyExistsError,
+    MoleculeInvalidSDFError,
+    MoleculeNotFoundError,
 } from '../errors';
 import { procedure, router } from '../trpc';
 import {
-  createMolecule,
-  populateMolecule,
-  prepopulateMoleculeArgs,
+    createMolecule,
+    populateMolecule,
+    prepopulateMoleculeArgs,
 } from '../utils/db';
 import { SDFParseError, parseSDF } from '../utils/sdf';
 

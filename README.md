@@ -11,8 +11,8 @@ a better understanding of their structure, properties, and interactions.
 ## Getting Started
 
 1. Create a [Planetscale](https://planetscale.com/) account or setup a MySQL database.
-2. Create a [Prisma Cloud](https://cloud.prisma.io/) account and setup a data proxy with your database.
-3. Copy `.env.example` to `.env` and replace `DATABASE_URL` with your data proxy url, and `MIGRATE_DATABASE_URL` with your database url.
+2. Create a [Prisma Cloud](https://cloud.prisma.io/) account and setup accelerate with your database.
+3. Copy `.env.example` to `.env` and replace `DATABASE_URL` with your Prisma accelerate url, and `DIRECT_URL` with your database url.
 4. Push the schema to the database
    ```bash
    yarn prisma db push

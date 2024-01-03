@@ -1,4 +1,6 @@
-import { Element, PrismaClient } from '@prisma/client/edge';
+import { Element, PrismaClient } from '@prisma/client';
+import { withAccelerate } from '@prisma/extension-accelerate';
+
 import crypto from 'crypto';
 import fs from 'fs/promises';
 import { glob } from 'glob';
@@ -10,7 +12,7 @@ import { parseSDF } from '@/server/utils/sdf';
 // From https://pubchem.ncbi.nlm.nih.gov/periodic-table
 import json from './data/PubChemElements_all.json';
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient().$extends(withAccelerate());
 
 async function main() {
   await prisma.molecule.deleteMany();

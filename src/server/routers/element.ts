@@ -1,10 +1,10 @@
 import { ElementSchema } from '@/schemas/element';
-import { Prisma } from '@prisma/client/edge';
+import { Prisma } from '@prisma/client';
 import { z } from 'zod';
 import {
-  CodeAlreadyExistsError,
-  CodeNotFoundError,
-  ElementInUseError,
+    CodeAlreadyExistsError,
+    CodeNotFoundError,
+    ElementInUseError,
 } from '../errors';
 import { procedure, router } from '../trpc';
 

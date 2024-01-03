@@ -1,7 +1,8 @@
 import { Molecule, PopulatedMolecule } from '@/ts/types';
 import { UNKNOWN_ELEMENT } from '@/utils/constants';
 import { unique } from '@/utils/helpers';
-import { Prisma, PrismaClient } from '@prisma/client/edge';
+import { Prisma } from '@prisma/client';
+import { PrismaClientType } from '../db';
 import { getMoleculePreviewUrl } from './molecule';
 
 export function prepopulateMoleculeArgs() {
@@ -34,7 +35,7 @@ export function populateMolecule(
   };
 }
 
-export async function createMolecule(prisma: PrismaClient, mol: Molecule) {
+export async function createMolecule(prisma: PrismaClientType, mol: Molecule) {
   const uniqueElements = unique(
     Object.values(mol.atoms).map((at) => at.element)
   );
